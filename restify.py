@@ -43,8 +43,6 @@ class Restify(object):
             app = import_module(entry)
             self.module += (entry, )
 
-            # print entry
-
             if module_has_submodule(app, 'models'):
                 models_module_name = '%s.%s' % (entry, 'models')
 
@@ -71,17 +69,11 @@ class Restify(object):
                         continue
 
                     url = self.slugify(mod2._meta.verbose_name_plural.title())
-                    # print url
                     viewset = get_viewsets(mod2)
 
                     self.viewsets[url] = viewset
 
-        print self.model
-
     def register(self):
-
-        # print self.viewsets
-
         self.router = DefaultRouter()
         for url, viewset in self.viewsets.iteritems():
             self.router.register(url, viewset)
