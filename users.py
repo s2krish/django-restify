@@ -1,3 +1,5 @@
+import django_filters
+
 from rest_framework import serializers
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -9,6 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.db import IntegrityError
+from django.db.models import Q
 
 # for reset password
 from django.contrib.auth.tokens import default_token_generator
@@ -30,14 +33,44 @@ def send_mail(subject_template_name, email_template_name,
         subject = ''.join(subject.splitlines())
         body = loader.render_to_string(email_template_name, context)
 
-        print body
-
         email_message = EmailMultiAlternatives(subject, body, from_email, [to_email])
         if html_email_template_name is not None:
             html_email = loader.render_to_string(html_email_template_name, context)
             email_message.attach_alternative(html_email, 'text/html')
 
         email_message.send()
+
+
+
+from rest_framework.filters import DjangoFilterBackend
+
+class AllDjangoFilterBackend(DjangoFilterBackend):
+    """
+    A filter backend that uses django-filter.
+    """
+
+    def get_filter_class(self, view, queryset=None):
+        """
+        Return the django-filters `FilterSet` used to filter the queryset.
+        """
+        filter_class = getattr(view, 'filter_class', None)
+        filter_fields = getattr(view, 'filter_fields', None)
+
+        if filter_class or filter_fields:
+            return super(AllDjangoFilterBackend, self).get_filter_class(self, view, queryset)
+
+        class AutoFilterSet(self.default_filter_set):
+            class Meta:
+                model = queryset.model
+                fields = None
+
+        return AutoFilterSet
+
+
+class UserFilter(django_filters.FilterSet):
+    class Meta:
+        model = User
+        fields = None
 
 
 class UserSerializers(serializers.ModelSerializer):
@@ -50,11 +83,48 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializers
 
-    def get_queryset(self):
-        if self.request.user.is_superuser:
-            return self.queryset
+    # apply filter on all fields
+    filter_fields = [f for f in User._meta.get_all_field_names()
+                     if 'password' != f]
+
+    @list_route(methods=['post'])
+    def check_username(self, request):
+        username = request.data.get('username', None)
+
+        users = User.objects.filter(username=username)
+
+        if len(users):
+            content = {
+                'found': True,
+                'error': _('User with username %s already exists') % username
+            }
         else:
-            return self.queryset.filter(id=self.request.user.id)
+            content = {
+                'found': False,
+                'error': _('No user exists with username %s') % username
+            }
+
+        return Response(content, status=status.HTTP_200_OK)
+
+    @list_route(methods=['post'])
+    def check_email(self, request):
+        email = request.data.get('email', None)
+
+        users = User.objects.filter(email=email)
+
+        if len(users):
+            content = {
+                'found': True,
+                'error': _('User with email %s already exists') % email
+            }
+        else:
+            content = {
+                'found': False,
+                'error': _('No user exists with email %s') % email
+            }
+
+        return Response(content, status=status.HTTP_200_OK)
+
 
     @list_route(methods=['post'])
     def register(self, request):
@@ -86,7 +156,7 @@ class UserViewSet(viewsets.ModelViewSet):
             message = {'error': e.message}
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            message = {'uknown': _('Unknow error occured')}
+            message = {'error': _('Unknow error occured')}
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
         user_searlized = UserSerializers([user], many=True)

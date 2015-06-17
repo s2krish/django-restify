@@ -16,6 +16,9 @@ def create_vieset(model, serializers_class):
     viewset_class.queryset = model.objects.all()
     viewset_class.serializer_class = serializers_class
 
+    # apply filter on all fields
+    viewset_class.filter_fields = model._meta.get_all_field_names()
+
     return viewset_class
 
 
