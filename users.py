@@ -1,12 +1,5 @@
 import django_filters
 
-from rest_framework import serializers
-from rest_framework import viewsets
-from rest_framework.response import Response
-from rest_framework import status
-
-from rest_framework.decorators import detail_route, list_route
-
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.conf import settings
@@ -22,7 +15,16 @@ from django.utils.encoding import force_bytes
 from django.template import loader
 from django.core.mail import EmailMultiAlternatives
 
+from rest_framework import serializers
+from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.decorators import detail_route, list_route
 
+# for backend filter
+from rest_framework.filters import DjangoFilterBackend
+
+"""
 def send_mail(subject_template_name, email_template_name,
               context, from_email, to_email, html_email_template_name=None):
         """
@@ -39,11 +41,9 @@ def send_mail(subject_template_name, email_template_name,
             email_message.attach_alternative(html_email, 'text/html')
 
         email_message.send()
+"""
 
-
-
-from rest_framework.filters import DjangoFilterBackend
-
+# Customize BackendFilter to allow all fields.
 class AllDjangoFilterBackend(DjangoFilterBackend):
     """
     A filter backend that uses django-filter.
@@ -162,6 +162,9 @@ class UserViewSet(viewsets.ModelViewSet):
         user_searlized = UserSerializers([user], many=True)
         return Response(user_searlized.data[0], status=status.HTTP_201_CREATED)
 
+
+
+"""
     @list_route(methods=['post'])
     def password_reset(self, request):
         template_name = 'registration/password_reset_form.html',
@@ -197,3 +200,4 @@ class UserViewSet(viewsets.ModelViewSet):
                   html_email_template_name=None)
 
         return Response(context, status=status.HTTP_201_CREATED)
+"""
