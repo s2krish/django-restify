@@ -51,7 +51,7 @@ class Restify(object):
         for url, viewset in self.viewsets.iteritems():
             self.router.register(url, viewset)
 
-        # special case for auth User model
+        # special case fo User model
         self.router.register('users', UserViewSet)
 
         return self.router
