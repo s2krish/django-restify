@@ -1,6 +1,6 @@
 Turn your Django project into RESTFul APIs in a minute.
 
-django-restify requires django-rest-framework. It will create RESTFul endpoints for all models that enabled in your project. 
+:code:`django-restify` requires :code:`django-rest-framework`. It will create RESTFul endpoints for all models that enabled in your project. 
 
 Uses
 ####
