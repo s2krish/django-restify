@@ -20,9 +20,6 @@ class Restify(object):
                             '^auth*'] + self.settings.get('IGNORE_LIST', [])
         self.router = None
         self.viewsets = {}   # viewsets
-        self.module = ()   # keep track of imported Django App (installed App)
-        self.model = ()   # keep track of imported model of an Django App
-
         self.apps()
 
     def slugify(self, value):
@@ -98,7 +95,7 @@ class Restify(object):
             self.router.register(url, viewset)
 
         # special case for auth User model
-        # self.router.register('users', UserViewSet)
+        self.router.register('users', UserViewSet)
 
         return self.router
 
