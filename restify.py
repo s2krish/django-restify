@@ -8,7 +8,18 @@ from django.conf import settings
 from rest_framework.routers import DefaultRouter
 
 from .viewsets import get_viewsets
-from .users import UserViewSet
+
+def get_user_viewset():
+    restify_settings = getattr(settings, 'RESTIFY', {})
+    user_viewset = restify_settings.get('USER_VIEWSET', None)
+
+    if user_viewset:
+        user_module = import_module(user_viewset)
+    else:
+        user_module = import_module('django_restify.users')
+    
+    return getattr(user_module, 'UserViewSet')
+
 
 class Restify(object):
 
@@ -52,7 +63,8 @@ class Restify(object):
             self.router.register(url, viewset)
 
         # special case fo User model
-        self.router.register('users', UserViewSet)
+        user_viewset = get_user_viewset()
+        self.router.register('users', user_viewset)
 
         return self.router
 
