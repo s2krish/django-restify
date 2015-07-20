@@ -31,49 +31,6 @@ class Restify(object):
 
         return re.sub('[-\s]+', '-', value)
 
-    """
-    def apps(self):
-        self.IGNORE_LIST += getattr(settings, 'RESTIFY_IGNORE_LIST', ())
-
-        for entry in settings.INSTALLED_APPS:
-            found = [name for name in self.IGNORE_LIST if re.findall(name, entry)]
-            if found or entry in self.module:
-                continue
-
-            app = import_module(entry)
-            self.module += (entry, )
-
-            if module_has_submodule(app, 'models'):
-                models_module_name = '%s.%s' % (entry, 'models')
-
-                models = import_module(models_module_name)
-
-                for mod in dir(models):
-
-                    # do not import model if it already imported
-                    if mod in self.model:
-                        continue
-
-                    # skip auth User model
-                    if mod.lower() == 'user':
-                        continue
-
-                    self.model += (mod, )
-
-                    try:
-                        mod2 = getattr(models, mod)
-                    except:
-                        continue
-
-                    if not isinstance(mod2, ModelBase) or getattr(mod2._meta, 'abstract', None):
-                        continue
-
-                    url = self.slugify(mod2._meta.verbose_name_plural.title())
-                    viewset = get_viewsets(mod2)
-
-                    self.viewsets[url] = viewset
-    """
-
     def apps(self):
         all_apps = apps.app_configs
         
