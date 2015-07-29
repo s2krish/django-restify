@@ -38,6 +38,7 @@ Settings
 ########
 
 .. code:: Python
+
    RESTIFY = {
        'USER_VIEWSET': '',
        'NEW_USER_ACTIVE': True,
