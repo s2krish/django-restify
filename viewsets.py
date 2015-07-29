@@ -1,10 +1,10 @@
-from importlib import import_module
 from django.conf import settings
 
 from rest_framework import serializers
 from rest_framework import viewsets
 
 from . import import_attr
+
 
 class Views(object):
     def __init__(self):
@@ -28,10 +28,9 @@ class Views(object):
         # Check if there's custom serializer class
         model_name = model._meta.model_name
         custom_serializer_class = self.restify_settings_serializers.get(model_name, None)
-        
+
         if custom_serializer_class:
             serializers_class = import_attr(custom_serializer_class)
-            print serializers_class
         else:
             serializers_class = self.create_serializer(model)
 
@@ -47,7 +46,6 @@ class Views(object):
         viewset_class.filter_fields = model._meta.get_all_field_names()
 
         return viewset_class
-
 
     def get_viewsets(self, model):
         """Creates and returns viewsets with serializer"""

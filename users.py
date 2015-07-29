@@ -1,25 +1,14 @@
-import django_filters
 
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.db import IntegrityError
-from django.db.models import Q
-
-# for reset password
-from django.contrib.auth.tokens import default_token_generator
-from django.contrib.auth import get_user_model
-from django.contrib.sites.shortcuts import get_current_site
-from django.utils.http import urlsafe_base64_encode
-from django.utils.encoding import force_bytes
-from django.template import loader
-from django.core.mail import EmailMultiAlternatives
 
 from rest_framework import serializers
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.decorators import detail_route, list_route
+from rest_framework.decorators import list_route
 
 
 class UserSerializers(serializers.ModelSerializer):
@@ -83,7 +72,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
         restify_settings = getattr(settings, "RESTIFY", {})
         is_active = restify_settings.get('NEW_USER_ACTIVE', False)
-                    
+
         if not email or not username or not password:
             validation_message = _('This is requried field')
             content = {
@@ -114,4 +103,3 @@ class UserViewSet(viewsets.ModelViewSet):
 
         user_searlized = UserSerializers(user)
         return Response(user_searlized.data, status=status.HTTP_201_CREATED)
-

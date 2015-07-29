@@ -7,7 +7,6 @@ from django.conf import settings
 
 from rest_framework.routers import DefaultRouter
 
-#from .viewsets import get_viewsets
 from .viewsets import Views
 
 def get_user_viewset():
@@ -18,7 +17,7 @@ def get_user_viewset():
         user_module = import_module(user_viewset)
     else:
         user_module = import_module('django_restify.users')
-    
+
     return getattr(user_module, 'UserViewSet')
 
 
@@ -27,7 +26,7 @@ class Restify(object):
     def __init__(self):
         # get restify specific settings
         self.settings = getattr(settings, 'RESTIFY', {})
-        
+
         self.IGNORE_LIST = ['^django*', '^api$', '^rest_framework*',
                             '^auth*'] + self.settings.get('IGNORE_LIST', [])
         self.router = None
@@ -45,7 +44,7 @@ class Restify(object):
 
     def apps(self):
         all_apps = apps.app_configs
-        
+
         for app, app_config in all_apps.iteritems():
             # Check if user is in ignored list
             found = [ignore_pattern for ignore_pattern in self.IGNORE_LIST if re.findall(ignore_pattern, app_config.name)]
@@ -58,7 +57,7 @@ class Restify(object):
                 viewset = view.get_viewsets(model)
 
                 self.viewsets[url] = viewset
-            
+
     def register(self):
         self.router = DefaultRouter()
         for url, viewset in self.viewsets.iteritems():
