@@ -37,8 +37,9 @@ Uses
 Settings
 ########
 
-    RESTIFY = {
-        'USER_VIEWSET': '',
-        'NEW_USER_ACTIVE': True,
-        'SERIALIZERS': {}
-    }
+.. code:: Python
+   RESTIFY = {
+       'USER_VIEWSET': '',
+       'NEW_USER_ACTIVE': True,
+       'SERIALIZERS': {}
+   }
