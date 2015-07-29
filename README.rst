@@ -33,3 +33,12 @@ Uses
 	     (.......),
 	     url(r'^api/v1/', include(router.urls)),
       ]
+
+Settings
+########
+
+    RESTIFY = {
+        'USER_VIEWSET': '',
+        'NEW_USER_ACTIVE': True,
+        'SERIALIZERS': {}
+    }
