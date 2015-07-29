@@ -7,7 +7,8 @@ from django.conf import settings
 
 from rest_framework.routers import DefaultRouter
 
-from .viewsets import get_viewsets
+#from .viewsets import get_viewsets
+from .viewsets import Views
 
 def get_user_viewset():
     restify_settings = getattr(settings, 'RESTIFY', {})
@@ -25,7 +26,7 @@ class Restify(object):
 
     def __init__(self):
         # get restify specific settings
-        self.settings  = getattr(settings, 'RESTIFY', {})
+        self.settings = getattr(settings, 'RESTIFY', {})
         
         self.IGNORE_LIST = ['^django*', '^api$', '^rest_framework*',
                             '^auth*'] + self.settings.get('IGNORE_LIST', [])
@@ -53,7 +54,8 @@ class Restify(object):
 
             for model in app_config.get_models():
                 url = self.slugify(model._meta.verbose_name_plural.title())
-                viewset = get_viewsets(model)
+                view = Views()
+                viewset = view.get_viewsets(model)
 
                 self.viewsets[url] = viewset
             
