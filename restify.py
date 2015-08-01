@@ -7,7 +7,7 @@ from django.conf import settings
 
 from rest_framework.routers import DefaultRouter
 
-from .viewsets import Views
+from .views import Views
 
 def get_user_viewset():
     restify_settings = getattr(settings, 'RESTIFY', {})
