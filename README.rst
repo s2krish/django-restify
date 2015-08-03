@@ -52,24 +52,29 @@ Settings
   }
 
 
-## IGNORE_LIST
+IGNORE_LIST
+-----------
 
 The modules to be ignored. It can accept regular expression. For example, the default ignore list looks like:
 
     ['^django*', '^api$', '^rest_framework*', '^auth*'] 
 
-## USER_VIEWSET
+USER_VIEWSET
+------------
 
 To use custom viewset for user model
 
-## NEW_USER_ACTIVE
+NEW_USER_ACTIVE
+---------------
 
 Set new registered user as active.
 
-## SERIALIZERS
+SERIALIZERS
+-----------
 
 To use custom serializers for a model. It should be in dictionary format e.g. {'model': 'package.serializers.ModelSerializer'
 
-## VIEWSETS
+VIEWSETS
+--------
 
 To use custom viewsets for a model. It should be dictionary format e.g. {'model': 'package.viewsets.ModelViewSet'
