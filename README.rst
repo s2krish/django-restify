@@ -40,7 +40,33 @@ Settings
 .. code:: Python
 
    RESTIFY = {
-       'USER_VIEWSET': '',
-       'NEW_USER_ACTIVE': True,
-       'SERIALIZERS': {}
-   }
+      'USER_VIEWSET': '',
+      'NEW_USER_ACTIVE': True,
+      'SERIALIZERS': {
+          'model': '',
+      },
+      'VIEWSETS': {
+          'entry': '',
+      }
+  }
+
+
+USER_VIEWSET
+------------
+
+To use custom viewset for user model
+
+NEW_USER_ACTIVE
+---------------
+
+Set new registered user as active.
+
+SERIALIZERS
+------------
+
+To use custom serializers for a model
+
+VIEWSETS
+------------
+
+To use custom viewsets for a model
