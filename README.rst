@@ -55,7 +55,7 @@ Settings
 IGNORE_LIST
 -----------
 
-The modules to be ignored. It can accept regular expression. For example, the default ignore list looks like:
+The modules to be ignored (in list format). It can accept regular expression. For example, the default ignore list looks like:
 
     ['^django*', '^api$', '^rest_framework*', '^auth*'] 
 
