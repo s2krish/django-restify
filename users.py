@@ -25,44 +25,12 @@ class UserViewSet(viewsets.ModelViewSet):
     filter_fields = [f for f in User._meta.get_all_field_names()
                      if 'password' != f]
 
-    @list_route(methods=['post'])
-    def check_username(self, request):
-        username = request.data.get('username', None)
-
-        users = User.objects.filter(username=username)
-
-        if len(users):
-            content = {
-                'found': True,
-                'error': _('User with username %s already exists') % username
-            }
-        else:
-            content = {
-                'found': False,
-                'error': _('No user exists with username %s') % username
-            }
-
-        return Response(content, status=status.HTTP_200_OK)
-
-    @list_route(methods=['post'])
-    def check_email(self, request):
-        email = request.data.get('email', None)
-
-        users = User.objects.filter(email=email)
-
-        if len(users):
-            content = {
-                'found': True,
-                'error': _('User with email %s already exists') % email
-            }
-        else:
-            content = {
-                'found': False,
-                'error': _('No user exists with email %s') % email
-            }
-
-        return Response(content, status=status.HTTP_200_OK)
-
+    def create(self, request, *args, **kwargs):
+        error = {
+            'post': _('Post method is not supported.'
+                      'Use either /users/register or /auth/register')
+        }
+        return Response(error, status=status.HTTP_400_BAD_REQUEST)
 
     @list_route(methods=['post'])
     def register(self, request):

@@ -11,9 +11,9 @@ class Views(object):
     def __init__(self):
         self.restify_settings = getattr(settings, 'RESTIFY', {})
         self.restify_settings_serializers = self.restify_settings.get(
-            'SERIALIZERS', None)
+            'SERIALIZERS', {})
         self.restify_settings_viewsets = self.restify_settings.get(
-            'VIEWSETS', None)
+            'VIEWSETS', {})
 
     def create_serializer(self, model):
         """Creates serializers class dynamically for given model"""

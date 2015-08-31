@@ -9,6 +9,7 @@ from rest_framework.routers import DefaultRouter
 
 from .views import Views
 
+
 def get_user_viewset():
     restify_settings = getattr(settings, 'RESTIFY', {})
     user_viewset = restify_settings.get('USER_VIEWSET', None)
@@ -35,7 +36,8 @@ class Restify(object):
 
     def slugify(self, value):
         try:
-            value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode('ascii')
+            value = unicodedata.normalize('NFKD', value).encode(
+                'ascii', 'ignore').decode('ascii')
         except:
             pass
         value = re.sub('[^\w\s-]', '', value).strip().lower()
@@ -47,7 +49,8 @@ class Restify(object):
 
         for app, app_config in all_apps.iteritems():
             # Check if user is in ignored list
-            found = [ignore_pattern for ignore_pattern in self.IGNORE_LIST if re.findall(ignore_pattern, app_config.name)]
+            found = [ignore_pattern for ignore_pattern in self.IGNORE_LIST
+                     if re.findall(ignore_pattern, app_config.name)]
             if found:
                 continue
 
