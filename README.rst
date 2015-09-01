@@ -1,6 +1,15 @@
-Turn your Django project into RESTFul APIs in a minute.
+django-restify
+==============
 
 :code:`django-restify` requires :code:`django-rest-framework`. It will create RESTFul endpoints for all models that are enabled in your project. 
+
+Installation
+============
+
+.. code:: bash
+
+   pip install django_restify
+
 
 Uses
 ====
@@ -57,6 +66,8 @@ IGNORE_LIST
 
 The modules to be ignored (in list format). It can accept regular expression. For example, the default ignore list looks like:
 
+.. code:: Python
+
     ['^django*', '^api$', '^rest_framework*', '^auth*'] 
 
 USER_VIEWSET
@@ -72,9 +83,9 @@ Set new registered user as active.
 SERIALIZERS
 -----------
 
-To use custom serializers for a model. It should be in dictionary format e.g. {'model': 'package.serializers.ModelSerializer'
+To use custom serializers for a model. It should be in dictionary format e.g. :code:`{'model': 'package.serializers.ModelSerializer'`
 
 VIEWSETS
 --------
 
-To use custom viewsets for a model. It should be dictionary format e.g. {'model': 'package.viewsets.ModelViewSet'
+To use custom viewsets for a model. It should be dictionary format e.g. :code:`{'model': 'package.viewsets.ModelViewSet'`

@@ -47,7 +47,7 @@ class Restify(object):
     def apps(self):
         all_apps = apps.app_configs
 
-        for app, app_config in all_apps.iteritems():
+        for app, app_config in all_apps.items():
             # Check if user is in ignored list
             found = [ignore_pattern for ignore_pattern in self.IGNORE_LIST
                      if re.findall(ignore_pattern, app_config.name)]
@@ -63,7 +63,7 @@ class Restify(object):
 
     def register(self):
         self.router = DefaultRouter()
-        for url, viewset in self.viewsets.iteritems():
+        for url, viewset in self.viewsets.items():
             self.router.register(url, viewset)
 
         # special case fo User model
