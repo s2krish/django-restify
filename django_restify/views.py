@@ -57,7 +57,7 @@ class Views(object):
 
         return viewset_class
 
-    def create_vieset(self, model, serializer_class):
+    def create_viewset(self, model, serializer_class):
         """Creates viewsets dynamically for model"""
         viewset_class = type('Viewset', (viewsets.ModelViewSet, ), {})
         viewset_class.queryset = model.objects.all()
@@ -73,6 +73,6 @@ class Views(object):
 
         if not viewsets_class:
             serializer_class = self.get_serializer(model)
-            viewsets_class = self.create_vieset(model, serializer_class)
+            viewsets_class = self.create_viewset(model, serializer_class)
 
         return viewsets_class
