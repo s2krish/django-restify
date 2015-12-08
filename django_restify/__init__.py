@@ -10,3 +10,5 @@ def import_attr(package_path):
     attr = getattr(module, attr)
 
     return attr
+
+VERSION = '0.1.9'
