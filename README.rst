@@ -65,7 +65,7 @@ Settings
 MODELS
 ------
 
-The list of models that you want create REST end-point. It will ingnore all other models and create end points models as listed in :code:`MODELS`. :code:`IGNORE_LIST` will get higher precedence over :code:`MODEL`.
+The list of models that you want create REST end-point. It will ingnore all other models and create end points models as listed in :code:`MODELS`. :code:`IGNORE_LIST` will get higher precedence over :code:`MODELS`.
 
 IGNORE_LIST
 -----------
