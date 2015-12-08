@@ -44,8 +44,12 @@ class Restify(object):
 
         return re.sub('[-\s]+', '-', value)
 
+    def get_apps(self):
+        return apps.app_configs
+
     def apps(self):
-        all_apps = apps.app_configs
+        all_apps = self.get_apps()
+        MODELS = self.settings.get('MODELS', None)
 
         for app, app_config in all_apps.items():
             # Check if user is in ignored list
@@ -55,6 +59,9 @@ class Restify(object):
                 continue
 
             for model in app_config.get_models():
+                if MODELS and model._meta.model_name not in MODELS:
+                    continue
+
                 url = self.slugify(model._meta.verbose_name_plural.title())
                 view = Views()
                 viewset = view.get_viewsets(model)

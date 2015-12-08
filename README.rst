@@ -49,7 +49,8 @@ Settings
 .. code:: Python
 
    RESTIFY = {
-      'IGNORE_LIST': []
+      'MODELS': [],
+      'IGNORE_LIST': [],
       'USER_VIEWSET': '',
       'NEW_USER_ACTIVE': True,
       'SERIALIZERS': {
@@ -60,6 +61,11 @@ Settings
       }
   }
 
+
+MODELS
+------
+
+The list of models that you want create REST end-point. It will ingnore all other models and create end points models as listed in `MODELS`. `IGNORE_LIST` will get higher precedence over `MODEL`.
 
 IGNORE_LIST
 -----------
