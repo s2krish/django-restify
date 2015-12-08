@@ -89,9 +89,9 @@ Set new registered user as active.
 SERIALIZERS
 -----------
 
-To use custom serializers for a model. It should be in dictionary format e.g. :code:`{'model': 'package.serializers.ModelSerializer'`
+To use custom serializers for a model. It should be in dictionary format e.g. :code:`{'model': 'package.serializers.ModelSerializer'}`
 
 VIEWSETS
 --------
 
-To use custom viewsets for a model. It should be dictionary format e.g. :code:`{'model': 'package.viewsets.ModelViewSet'`
+To use custom viewsets for a model. It should be dictionary format e.g. :code:`{'model': 'package.viewsets.ModelViewSet'}`
